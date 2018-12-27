@@ -6,7 +6,7 @@ long long generateCheckBit(long long input_upc);
 //driver
 int main(){
 	
-	long long input_upc;			//use of long long so can read 11 digit number
+	long long input_upc = 0;		//use of long long so can read 11 digit number
 
 	std::cout << "Please enter your UPC code: ";
 
@@ -35,7 +35,8 @@ long long generateCheckBit(long long input_upc){
 	int working_num [12];			//hold digits
 	int odd_sum = 0;			//holds the sum of the odd digits
 	int even_sum = 0;			//holds the sum of the even digits
-	int final_digit;			//holds the final digit
+	int final_digit = 0;			//holds the final digit
+	long long upc_code = 0;			//full calculated upc_code
 
 	for(int i = 11; i >=1; i--){
 		working_num[i] = input_upc % 10;
@@ -69,6 +70,12 @@ long long generateCheckBit(long long input_upc){
 	if(final_digit != 0)
 		final_digit  = 10 - final_digit;
 
-	return final_digit;
+						//Append final digit to array
+						//(hence why we needed 12 spaces)
+	working_num[11] = final_digit;
 
+	for (int i = 0; i < 12; i++)
+    		upc_code = 10 * upc_code + working_num[i];
+
+	return upc_code;
 }
